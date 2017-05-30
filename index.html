@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="import" href="xdialog.html"/>
+    <style>
+        body,html
+        {
+            height: 100%;
+            width: 100%;
+            background-image: url("baihe.jpg");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <x-dialog>
+        <x-title>
+        对话框标题
+    </x-title>
+        <x-content>
+            对话框内容
+            <form>
+                <input type="text" value="" placeholder="请输入用户名">
+                <input type="password" placeholder="请输入密码">
+                <input type="submit" value="提交">
+            </form>
+        </x-content>
+    </x-dialog>
+<x-dialog  height="300" width="500">
+    <x-title>
+        测试一下啊
+    </x-title>
+    <x-content>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur culpa dolor fuga nemo non porro repellendus sint temporibus! A, eveniet?
+    </x-content>
+</x-dialog>
+</body>
+
+</html>

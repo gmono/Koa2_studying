@@ -1,0 +1,110 @@
+<template>
+    <div id="top">
+        <div id="title" >
+            <content select="x-title"></content>
+
+        </div>
+        <div id="content">
+            <content select="x-content"></content>
+        </div>
+        <style>
+            #title
+            {
+                background-color: #f3f3f3;
+                font-size: large;
+                font-weight: bold;
+                padding-left: 5px;
+                line-height: 1.8;
+                cursor: default;
+                border-bottom: #ffffff 1px solid;
+                font-family: 'Ubuntu',"微软雅黑";
+                box-shadow: rgba(0, 0, 0, 0.13) 0 2px 5px 0;
+                margin-bottom: 5px;
+                text-indent: 1em;
+            }
+            #content{
+                /*text-indent: 2em;*/
+
+                min-height: 300px;
+                word-wrap: break-word;
+                word-break: break-all;
+                padding: 5px;
+            }
+            #top{
+                /*background-color: #ffffff;*/
+                overflow: hidden;
+                position: relative;
+                box-shadow: rgba(52, 52, 52, 0.2) 0 0 5px 1px;
+                border-radius: 5px;
+            }
+            #top:after
+            {
+                position: absolute;
+                content: '';
+                height: 120%;
+                width: 120%;
+                left:-10%;
+                top:-10%;
+                filter: blur(10px);
+                background-color: rgba(255, 255, 255, 0.29);
+                z-index:-1;
+                transition: all 0.2s ease;
+            }
+            :host{
+                min-width: 300px;
+                display: block;
+                position: fixed;
+                left: 0;
+                top:0;
+            }
+            #top.active:after
+            {
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+        </style>
+    </div>
+
+</template>
+<script>
+    let thisdocument=document.currentScript.ownerDocument;
+    document.registerElement('x-dialog', {
+        prototype: Object.create(HTMLElement.prototype, {
+            createdCallback: {
+                value: function() {
+                    let height=this.getAttribute('height');
+                    let width=this.getAttribute('width');
+                    height=height==null? 300:height;
+                    width=width==null? 300:width;
+                    this.style.height=`${height}px`;
+                    this.style.width=`${width}px`;
+                    var temp = thisdocument.querySelector('template');
+                    var content = document.importNode(temp.content, true);
+                    this.createShadowRoot().appendChild(content);
+                    this.shadowRoot.querySelector("#title").onmousedown=(e)=>{
+                        let tx=e.pageX-this.offsetLeft;
+                        let ty=e.pageY-this.offsetTop;
+                        this.onmousemove=(me)=>{
+                            this.style.left=`${me.pageX-tx}px`;
+                            this.style.top=`${me.pageY-ty}px`;
+                        }
+                    }
+                    let fthis=this;
+                    document.addEventListener('mouseup',()=>{
+                        fthis.onmousemove=null;
+                    })
+                    this.onmousedown=()=>{
+                        let max=0;
+                        [].forEach.call(document.querySelectorAll('x-dialog'),(item)=>{
+                            if(item.style.zIndex>max) max=item.style.zIndex;
+                            item.shadowRoot.querySelector("#top").className="";
+                        })
+                        this.style.zIndex=parseInt(max)+1;
+                        this.shadowRoot.querySelector("#top").classList.add("active");
+                    }
+
+                }
+            }
+        })
+    });
+
+</script>
