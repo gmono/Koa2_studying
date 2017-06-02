@@ -1,0 +1,15 @@
+{
+  "name": "webproj",
+  "version": "1.0.0",
+  "description": "node test",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "gaozijian",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "koa": "^2.2.0"
+  }
+}
