@@ -43,6 +43,17 @@ page.get('/test',async (ctx)=>{
 let router=new Router();
 router.use('/',home.routes(),home.allowedMethods())
 router.use('/page',page.routes(),page.allowedMethods())
+//文件上传
+const multer=require("koa-multer")
+let upload=multer({
+    dest:'./upload'
+})
+router.post('/upload',upload.single('f1'),async (ctx)=>{
+    const {originalname,path,mimetype}=ctx.req.file;
+    console.log(originalname,path,mimetype);
+    // ctx.body="文件上传成功！";
+    ctx.body+=`<script>setTimeout(()=>{window.history.back();},2000)</script>`;
+})
 
 app.use(router.routes()).use(router.allowedMethods())
 
@@ -53,7 +64,7 @@ const mount=require("koa-mount")
 //也可以作为Applilcation的上层
 let sstatic=require('koa-static')
 const path=require('path')
-app.use(mount('/static',sstatic(
+app.use(mount('/static/',sstatic(
     path.join(__dirname,'./')
 )));
 
@@ -76,5 +87,7 @@ app.use(mount('/key',(ctx)=>{
     //此处对cookie添加属性 signed表示需要数字签名 expires提供一个时间戳
     ctx.cookies.set("test","value",{signed:true,expires:new Date()})
 }))
+
+
 app.listen(3000)
 
