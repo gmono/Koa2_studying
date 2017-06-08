@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="import" href="xdialog.html"/>
+    <link rel="import" href="./xdialog.html"/>
     <style>
         body,html
         {
             height: 100%;
             width: 100%;
-            background-image: url("baihe.jpg");
+            background-image: url("./baihe.jpg");
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -25,10 +25,10 @@
     </x-title>
         <x-content>
             对话框内容
-            <form>
-                <input type="text" value="" placeholder="请输入用户名">
-                <input type="password" placeholder="请输入密码">
-                <input ty+pe="submit" value="提交">
+            <form method="POST" action="/submit">
+                <input type="text" name="username" value="" placeholder="请输入用户名">
+                <input type="password" name="password" placeholder="请输入密码">
+                <input type="submit" value="提交">
             </form>
         </x-content>
     </x-dialog>
